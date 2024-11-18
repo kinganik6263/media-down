@@ -6,7 +6,7 @@ const { tikdown, fbdown2, instagram, ytdown } = require("nayan-media-downloader"
 
 
 
-app.get("/fb", (req, res) => {
+app.get("/facebook", (req, res) => {
 const key = "Nayan"
 const link = req.query.link;
 fbdown2(link, key).then(data => {
@@ -27,7 +27,7 @@ instagram(link).then(data => {
 })});
 
 
-app.get("/all", (req, res) => {
+app.get("/youtube", (req, res) => {
 const link = req.query.link
 ytdown(link).then(data => {
     res.send(data)
