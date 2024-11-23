@@ -4,6 +4,9 @@ const { tikdown, fbdown2, instagram, ytdown } = require("nayan-media-downloader"
 
 
 
+app.get("/", (req, res) => {
+res.sendFile(path.join(__dirname, "home.html"))})
+
 
 
 app.get("/facebook", (req, res) => {
