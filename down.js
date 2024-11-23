@@ -15,8 +15,7 @@ const key = "Nayan"
 const link = req.query.link;
 fbdown2(link, key).then(data => {
 res.send(data)
-console.log(data)
-})});
+console.log(data)})});
 
 app.get("/tiktok", (req, res) => {
 const link = req.query.link;
@@ -27,16 +26,17 @@ res.send(data)})});
 app.get("/instagram", (req, res) => {
 const link = req.query.link;
 instagram(link).then(data => {
-    res.send(data)
-})});
+    res.send(data)})});
 
 
 app.get("/youtube", (req, res) => {
 const link = req.query.link
 ytdown(link).then(data => {
-    res.send(data)
-})
-})
+    res.send(data)})})
+
+
+app.get("*", (req, res) => {
+    res.redirect("/")})
 
 
 
