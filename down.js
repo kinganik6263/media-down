@@ -10,6 +10,10 @@ app.get("/", (req, res) => {
 res.sendFile(path.join(__dirname, "home.html"))})
 
 
+app.get("/download", (req, res) => {
+res.sendFile(path.join(__dirname, "down.html"))})
+
+
 
 app.get("/facebook", (req, res) => {
 const key = "Nayan"
