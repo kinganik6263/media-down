@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ভিডিও ডাউনলোড</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: backgroundChange 5s infinite alternate;
+    background-color: #f0f8ff;
+}
+
+@keyframes backgroundChange {
+    0% {
+        background-color: #ff0000; /* Red */
+    }
+    14% {
+        background-color: #ff7f00; /* Orange */
+    }
+    28% {
+        background-color: #ffff00; /* Yellow */
+    }
+    42% {
+        background-color: #00ff00; /* Green */
+    }
+    57% {
+        background-color: #0000ff; /* Blue */
+    }
+    71% {
+        background-color: #4b0082; /* Indigo */
+    }
+    85% {
+        background-color: #8b00ff; /* Violet */
+    }
+    100% {
+        background-color: #ff0000; /* Red again */
+    }
+}
+
+#container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+}
+
+#container:hover {
+    transform: scale(1.05);
+}
+
+input[type="text"] {
+    padding: 15px;
+    width: 80%;
+    margin-bottom: 20px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 18px;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+button {
+    padding: 15px 30px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: #218838;
+    transform: scale(1.1);
+}
+
+#loading {
+    display: none;
+    margin-top: 20px;
+    font-size: 20px;
+    color: #28a745;
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.links {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+}
+
+a {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+a:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+.owner-links {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.contact-message {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+footer {
+    margin-top: 30px;
+}
+
+footer p {
+    font-size: 16px;
+    color: #333;
+}
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js" integrity="sha512-v8+bPcpk4Sj7CKB11+gK/FnsbgQ15jTwZamnBf/xDmiQDcgOIYufBo6Acu1y30vrk8gg5su4x0CG3zfPaq5Fcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <div id="container">
+        <h1>Anik Media Downloader</h1>
+        <p>Facebook, YouTube, TikTok, Instagram ভিডিও সাপোর্ট</p>
+        <input type="text" id="link" placeholder="ভিডিও লিঙ্ক দিন">
+        <button id="btn">ভিডিও পেতে ক্লিক করুন</button>
+        <div id="loading">
+            <span>লোড হচ্ছে...</span>
+            <div class="spinner"></div>
+        </div>
+        <div class="links" id="links"></div>
+        
+        <div class="owner-links">
+            <div class="contact-message">
+                <p>Contact any problem:</p>
+            </div>
+            <a href="https://www.facebook.com/profile.php?id=100001453534533" target="_blank">Owner's Facebook</a>
+            <a href="mailto: sadikurrahmansahid@gmail.com" target="_blank">Owner's Gmail</a>
+        </div>
+        
+        <p>&copy; Mohammad Anik</p>
+    </div>
+    <script>
+        document.getElementById('btn').addEventListener('click', () => {
+    const link = document.getElementById('link').value;
+    const loading = document.getElementById('loading');
+    const linksDiv = document.getElementById('links');
+    linksDiv.innerHTML = ''; // Clear previous links
+    loading.style.display = 'block'; // Show loading indicator
+
+    if (link.startsWith("https://www.facebook.com")) {
+        axios.get(`https://media-down-1.onrender.com/facebook?link=${link}`)
+        .then((res) => {
+            loading.style.display = 'none'; // Hide loading
+            const a1 = document.createElement('a');
+            a1.href = res.data.media.hd;
+            a1.innerHTML = "এইচডি ভিডিও ডাউনলোড করুন";
+            linksDiv.appendChild(a1);
+
+            const a2 = document.createElement('a');
+            a2.href = res.data.media.sd;
+            a2.innerHTML = "এসডি ভিডিও ডাউনলোড করুন";
+            linksDiv.appendChild(a2);
+
+            const p = document.createElement('p');
+            p.innerHTML = res.data.media.title;
+            linksDiv.appendChild(p);
+        });
+    } else if (link.startsWith("https://vt.tiktok.com")) {
+        axios.get(`https://media-down-1.onrender.com/tiktok?link=${link}`)
+        .then((res) => {
+            loading.style.display = 'none'; // Hide loading
+            const a1 = document.createElement('a');
+            a1.href = res.data.data.video;
+            a1.innerHTML = "টিকটক ভিডিও ডাউনলোড করুন";
+            linksDiv.appendChild(a1);
+
+            const a2 = document.createElement('a');
+            a2.href = res.data.data.audio;
+            a2.innerHTML = "টিকটক অডিও ডাউনলোড করুন";
+            linksDiv.appendChild(a2);
+
+            const p = document.createElement('p');
+            p.innerHTML = res.data.data.title;
+            linksDiv.appendChild(p);
+        });
+    } else if (link.startsWith("https://www.instagram.com")) {
+        axios.get(`https://media-down-1.onrender.com/instagram?link=${link}`)
+        .then((res) => {
+            loading.style.display = 'none'; // Hide loading
+            const a1 = document.createElement('a');
+            a1.href = res.data.data.video;
+            a1.innerHTML = "ইনস্টাগ্রাম ভিডিও ডাউনলোড করুন";
+            linksDiv.appendChild(a1);
+        });
+    } else if (link.startsWith("https://youtu")) {
+        axios.get(`https://media-down-1.onrender.com/youtube?link=${link}`)
+        .then((res) => {
+            loading.style.display = 'none'; // Hide loading
+            const a1 = document.createElement('a');
+            a1.href = res.data.data.video;
+            a1.innerHTML = "ইউটিউব ভিডিও ডাউনলোড করুন";
+            linksDiv.appendChild(a1);
+
+            const a2 = document.createElement('a');
+            a2.href = res.data.data.video_hd;
+            a2.innerHTML = "ইউটিউব এইচডি ভিডিও ডাউনলোড করুন";
+            linksDiv.appendChild(a2);
+
+            const a3 = document.createElement('a');
+            a3.href = res.data.data.audio;
+            a3.innerHTML = "অডিও ডাউনলোড করুন";
+            linksDiv.appendChild(a3);
+
+            const p = document.createElement('p');
+            p.innerHTML = res.data.data.title;
+            linksDiv.appendChild(p);
+        });
+    } else {
+        loading.style.display = 'none'; // Hide loading
+        alert('লিঙ্কটি সমর্থিত নয়।');
+    }
+});
+    </script>
+</body>
+</html>
